@@ -29,3 +29,6 @@ And then, install it to a directory in your `$PATH`.
 ```commandline
 $ install -m775 miscount /usr/bin/miscount
 ```
+
+## License
+Miscounts is free and open source software abiding with the terms of the MIT License.
