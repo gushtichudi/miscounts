@@ -113,13 +113,13 @@ int Miscount::AppendMiscount(MiscountParams *m) {
 
 	// miscount
 	auto nom = std::string(m->a->nameOfMiscount);
-	replaceAll(nom, ",", "AND/OR");
+	replaceAll(nom, ",", " AND/OR ");
 
 	miscountFile << nom << ",";
 
 	// name of offender
 	auto noo = std::string(m->a->nameOfOffender);
-	replaceAll(noo, ",", "AND/OR");
+	replaceAll(noo, ",", " AND/OR ");
 	miscountFile << noo << ",";
 
 	// description of miscount
@@ -130,7 +130,7 @@ int Miscount::AppendMiscount(MiscountParams *m) {
 	//	includes stuff in normal grammar that might intefere
 	//	with the way how programs parse CSV
 
-	replaceAll(miscountDescription, "AND/OR", ",");
+	replaceAll(miscountDescription, ",", " AND/OR ");
 	
 	if (m->b->writeDescriptionInEditor == false) {
 		miscountFile << miscountDescription << std::endl;
