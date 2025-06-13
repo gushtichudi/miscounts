@@ -103,6 +103,9 @@ class Build:
         for argument in arguments:
             self.global_cc_flags.append(argument)
 
+    def append_compiler_argument(self, argument: str) -> None:
+        self.global_cc_flags.append(argument)
+
     def add_task_queue(self, arguments: list) -> None:
         self.task_queue[str(self.task_queue_index)] = arguments
         self.task_queue_index += 1
