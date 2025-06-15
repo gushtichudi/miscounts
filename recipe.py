@@ -5,13 +5,13 @@ b = build.Build("miscount")
 
 b.add_compiler_arguments(
 	[
-		"-Wall", "-Wextra", "-Wpedantic", "-Wfatal-errors", "-std=gnu++23", "-march=native", "-O2", "-ggdb3"
+		"-Wall", "-Wextra", "-Wpedantic", "-Wfatal-errors", "-std=gnu++23", "-march=native", "-O1", "-ggdb3"
 	]
 )
 
 if sys.platform == "win32": b.append_compiler_argument("-lstdc++exp")
 
-	
+
 b.override_default_compiler("c++")
 
 

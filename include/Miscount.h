@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cassert>
 #include <cerrno>
 #include <chrono>
 #include <cstdlib>

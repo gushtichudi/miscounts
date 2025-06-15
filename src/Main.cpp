@@ -6,7 +6,7 @@
 #include "../include/Miscount.h"
 
 int main(int argc, char **argv) {
-	if (argc <= 2) {
+	if (argc < 2) {
 		fprintf(stderr, "Usage: miscount -m <Miscount> -n <Name> -d <Description>\n");
 		return -1;
 	}
@@ -24,7 +24,7 @@ int main(int argc, char **argv) {
 	}
 
 	int c;
-	while ((c = getopt(argc, argv, "m:n:d:")) != -1) {
+	while ((c = getopt(argc, argv, "m:n:d:v")) != -1) {
 		switch (c) {
 			case 'm':
 				args->nameOfMiscount = strdup(optarg);
@@ -42,6 +42,14 @@ int main(int argc, char **argv) {
 				furtheroptions->writeDescriptionInEditor = false;
 
 				break;
+
+			case 'v':
+			    std::print("{}\n", MISCOUNT_VERSION);
+
+				delete args;
+				delete furtheroptions;
+
+				return 0;
 		}
 	}
 

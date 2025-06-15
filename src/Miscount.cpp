@@ -1,23 +1,33 @@
 #include "../include/Miscount.h"
 
-static std::string getUserHomeDir() {
+static inline const char *getUserHomeDir() {
 	#ifdef __WIN32
 		char homeDir[MAX_PATH];
 	    if (GetEnvironmentVariable("USERPROFILE", homeDir, MAX_PATH)) {
-	        return std::string(homeDir);
+	        return homeDir;
 	    } else {
 	        fprintf(stderr, "miscount: cannot get home directory\n");
 	        exit(-1);
 	    }
 	#else
-	    return std::string(getenv("HOME"));
+	    return getenv("HOME");
 	#endif
 }
 
 static std::string buildMiscountPath() {
-	const char *home = getUserHomeDir().c_str();
-
+	const char *home = getUserHomeDir();
 	auto ret = std::filesystem::path(home) / std::filesystem::path("Documents") / std::filesystem::path("miscount.csv");
+
+	// make sure `home` isn't optimized out, otherwise keep trying for 10 tries
+	// a notable problem is that `auto ret` turns out `home` into `miscount.csv`
+	// this just checks for that.
+	int tries = 10;
+	while (strcmp(home, "miscount.csv") == 0) {
+	    fprintf(stderr, "miscount: warning: compiler deliquency detected, trying again...\n");
+		tries--;
+
+		buildMiscountPath();
+	}
 
 	return ret.string();
 }
@@ -38,10 +48,10 @@ static int mkMiscountPath() {
 		exit(-1);
 	}
 
-	mout << "Date and Time,Miscount,Name,Description" << std::endl;
+	mout << "DateTime,Miscount,Name,Description" << std::endl;
 	mout.close();
 
-	return 0; 
+	return 0;
 }
 
 static std::string inferGoodEditor() {
@@ -101,7 +111,7 @@ void Miscount::Init() {
 int Miscount::AppendMiscount(MiscountParams *m) {
 	std::ofstream miscountFile(buildMiscountPath(), std::ios::app);
 	if (!miscountFile) {
-		std::print("miscount: cannot open {}: {}\n", 
+		std::print("miscount: cannot open {}: {}\n",
 			buildMiscountPath(), strerror(errno));
 
 		return 1;
@@ -131,7 +141,7 @@ int Miscount::AppendMiscount(MiscountParams *m) {
 	//	with the way how programs parse CSV
 
 	replaceAll(miscountDescription, ",", " AND/OR ");
-	
+
 	if (m->b->writeDescriptionInEditor == false) {
 		miscountFile << miscountDescription << std::endl;
 	} else {
@@ -152,7 +162,7 @@ int Miscount::AppendMiscount(MiscountParams *m) {
 
 		// delete any temp files
 	if (std::remove(".miscount_tmp") != 0)
-		fprintf(stderr, "miscount: warning: tried to delete temp file but it might not exist or has already been removed\n");
+		fprintf(stderr, "miscount: warning: tried to delete temp file but it might not exist anymore\nn");
 	}
 
 	return 0;
