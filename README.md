@@ -24,10 +24,10 @@ Invoke this command and a binary will be built for you.
 $ python recipe.py
 ```
 
-And then, install it to a directory in your `$PATH`.
+And then, install it via the shell script
 
 ```commandline
-$ install -m775 miscount /usr/bin/miscount
+$ ./install.sh
 ```
 
 ## License
