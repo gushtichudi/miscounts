@@ -21,20 +21,20 @@
 #endif
 
 typedef struct MiscountParams {
-	Args *a;
-	FurtherOptions *b;
+  Args *a;
+  FurtherOptions *b;
 } MiscountParams;
 
 class Miscount {
-	public:
-		Args *a;
-		FurtherOptions *b;
+public:
+  Args *a;
+  FurtherOptions *b;
 
-		Miscount(MiscountParams *miscountparams) {
-			a = miscountparams->a;
-			b = miscountparams->b;
-		}
+  Miscount(MiscountParams *miscountparams) {
+    a = miscountparams->a;
+    b = miscountparams->b;
+  }
 
-		void Init();
-		int AppendMiscount(MiscountParams *m);
+  void Init();
+  int AppendMiscount(MiscountParams *m);
 };
